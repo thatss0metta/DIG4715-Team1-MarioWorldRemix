@@ -4,54 +4,76 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float horizontal;
-    private float speed = 5f;
-    private float jumpingPower = 16f;
-    private bool isFacingRight = true;
+    [Header ("Horizontal Movement")]
+    public float moveSpeed = 10f;
+    public Vector2 direction;
+    private bool facingRight = true;
 
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask groundLayer;
+    [Header("Components")]
+    public Rigidbody2D rb;
+    //public Animator animator;
+    public LayerMask groundLayer;  
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Physics")]
+    public float maxSpeed = 7f;
+    public float linearDrag = 4f;
 
-    // Update is called once per frame
+    [Header("Collision")]
+    public bool onGround = false;
+    public float groundLength = 0.6f;
+
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        if(Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-        }
-
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }
+        onGround = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayer);
+        direction = new Vector2 (Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
-
-    private void FixedUpdate()
+    
+    void FixedUpdate()
     {
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        moveCharacter(direction.x);
+        modifyPhysics();
     }
 
-    private bool IsGrounded()
+    void moveCharacter(float horizontal)
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-    }
-
-    private void Flip()
-    {
-        if(isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        rb.AddForce(Vector2.right * horizontal * moveSpeed);
+       
+        
+        if((horizontal > 0 && !facingRight) || (horizontal < 0 && facingRight))
         {
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            Flip();
         }
+        
+        if(Mathf.Abs(rb.velocity.x) > maxSpeed)
+        {
+        rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
+        }
+         //animator.SetFloat("horizontal", Mathf.Abs(rb.velocity.x));
+         
     }
+    void modifyPhysics()
+         {
+            bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
+
+            if(Mathf.Abs(direction.x) < 0.4f || changingDirections)
+            {
+                rb.drag = linearDrag;
+            }
+            else
+            {
+                rb.drag = 0f;
+            }
+                    
+            }    
+        
+         void Flip()
+         {
+            facingRight = !facingRight;
+            transform.rotation = Quaternion.Euler(0, facingRight ? 0 : 180, 0);
+         }
+         private void OnDrawGizmos()
+         {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position,transform.position + Vector3.down * groundLength);
+         }
 }
