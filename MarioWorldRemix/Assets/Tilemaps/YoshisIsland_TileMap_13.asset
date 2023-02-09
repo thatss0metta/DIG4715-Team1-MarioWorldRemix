@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: YoshisIsland_TileMap_13
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -890242607, guid: ac1615a9242bf534b9c63ee73453d00e, type: 3}
+  m_Sprite: {fileID: 1099927507, guid: 2c265daee0e69324a94f1f35cc8cf217, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
