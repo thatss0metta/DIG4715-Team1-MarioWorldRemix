@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     public bool onGround = false;
     public float groundLength = 3f;
     public Vector3 colliderOffset;
+    public bool StarPowerup = false;
 
     [Header("Canvas")]
     public GameObject loseScreen;
@@ -171,7 +172,7 @@ public class Player : MonoBehaviour
         CoinText.gameObject.SetActive(false);
         CoinTextFront.gameObject.SetActive(false);
         loseScreen.gameObject.SetActive(true);
-        audioSource.Stop();
+        Destroy(gameObject);
     }
 
     void SetCoinText()
@@ -193,14 +194,17 @@ public class Player : MonoBehaviour
 
     public void powerUp()
     {
-
-
         PlaySound(powerUpClip);
-
         maxSpeed = 30;
         moveSpeed = 30;
         StartCoroutine(changeSpeed());
+    }
 
+    public void InvinPowerup()
+    {
+        PlaySound(powerUpClip);
+        StarPowerup = true;
+        StartCoroutine(changeInvin());
     }
 
     IEnumerator changeSpeed()
@@ -208,6 +212,13 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         maxSpeed = 7;
         moveSpeed = 15;
+        PlaySound(powerUpClip);
+    }
+    IEnumerator changeInvin()
+    {
+        yield return new WaitForSeconds(5f);
+        StarPowerup = false;
+
         PlaySound(powerUpClip);
     }
 }

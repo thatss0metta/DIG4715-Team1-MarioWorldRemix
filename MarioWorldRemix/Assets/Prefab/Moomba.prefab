@@ -239,4 +239,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b4b21170ae01648be128ce1730c0ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: []
+  enemy: {fileID: 0}

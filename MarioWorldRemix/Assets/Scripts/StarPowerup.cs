@@ -11,8 +11,9 @@ public class StarPowerup : MonoBehaviour
     {
         Player controller = other.GetComponent<Player>();
 
-        if (controller != null)
+        if (controller != null) 
         {
+            controller.InvinPowerup();
             Destroy(gameObject);
             controller.PlaySound(powerUpClip);
         }
