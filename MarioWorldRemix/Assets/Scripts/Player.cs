@@ -34,11 +34,17 @@ public class Player : MonoBehaviour
     [Header("Canvas")]
     public GameObject loseScreen;
     AudioSource audioSource;
+    public AudioSource BackgroundMusic;
+    public AudioSource BackgroundMusic2;
     public TextMeshProUGUI CoinText;
     public TextMeshProUGUI CoinTextFront;
     int coinCount = 0;
     public AudioClip jumpClip;
+    public AudioClip HurtClip;
+    public AudioClip loseAudio;
     public ParticleSystem dust;
+    public AudioClip powerUpClip;
+    public bool MoshiMode = false;
 
     void Start()
     {
@@ -47,6 +53,17 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (MoshiMode)
+        {
+            animator.SetBool("moshi", true);
+            jumpSpeed = 20;
+        }
+        else
+        {
+            animator.SetBool("moshi", false);
+            jumpSpeed = 15;
+        }
+
         onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) || Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
 
         if (Input.GetButtonDown("Jump"))
@@ -148,8 +165,11 @@ public class Player : MonoBehaviour
 
     public void Death()
     {
+        BackgroundMusic.Stop();
+        BackgroundMusic2.Stop();
+        audioSource.PlayOneShot(loseAudio);
         loseScreen.gameObject.SetActive(true);
-
+        loseScreen.gameObject.SetActive(true);
     }
 
     void SetCoinText()
@@ -167,6 +187,26 @@ public class Player : MonoBehaviour
     void CreateDust()
     {
         dust.Play();
+    }
+
+    public void powerUp()
+    {
+
+
+        PlaySound(powerUpClip);
+
+        maxSpeed = 30;
+        moveSpeed = 30;
+        StartCoroutine(changeSpeed());
+
+    }
+
+    IEnumerator changeSpeed()
+    {
+        yield return new WaitForSeconds(5f);
+        maxSpeed = 7;
+        moveSpeed = 15;
+        PlaySound(powerUpClip);
     }
 }
 

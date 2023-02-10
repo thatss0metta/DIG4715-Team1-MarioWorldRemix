@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoombaController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     private int direction = -1;
     private Vector3 movement;
-    public Sprite[] sprites;
+    public SpriteRenderer enemy;
 
 
     void Update()
@@ -21,11 +21,20 @@ public class MoombaController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Player player = collision.gameObject.GetComponent<Player>();
         direction = direction * -1;
-        if (direction == 1)
-            GetComponent<SpriteRenderer>().sprite = sprites[1];
 
+        if (collision.gameObject.tag == "Player")
+        {
+            player.Death();
+        }
+
+        if (direction == 1)
+            enemy.flipX = false;
         else
-            GetComponent<SpriteRenderer>().sprite = sprites[0];
+            enemy.flipX = true;
+
+
+
     }
 }

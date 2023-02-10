@@ -13,7 +13,7 @@ public class PepperPowerup : MonoBehaviour
         if (controller != null)
         {
             Destroy(gameObject);
-            controller.PlaySound(powerUpClip);
+            controller.powerUp();
         }
     }
 }

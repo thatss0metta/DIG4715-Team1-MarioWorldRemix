@@ -5,7 +5,6 @@ using UnityEngine;
 public class Teleport : MonoBehaviour
 {
     public Transform teleportTarget;
-    // public Transform teleportTargetCam;
     public GameObject player;
     public AudioSource Level1;
     public AudioSource Level2;
@@ -14,11 +13,12 @@ public class Teleport : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        PlayerController controller = other.GetComponent<PlayerController>();
+        Player controller = other.GetComponent<Player>();
         if (controller != null)
         {
             Level1.Stop();
             player.transform.position = teleportTarget.transform.position;
+            cam.transform.position = new Vector3(11.8f, 20.9f, -10f);
             controller.PlaySound(teleportClip);
             Level2.Play();
         }

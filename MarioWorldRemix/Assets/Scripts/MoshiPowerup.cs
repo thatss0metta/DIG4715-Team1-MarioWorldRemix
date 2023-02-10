@@ -14,6 +14,7 @@ public class MoshiPowerup : MonoBehaviour
         {
             Destroy(gameObject);
             controller.PlaySound(powerUpClip);
+            controller.MoshiMode = true;
 
         }
     }
