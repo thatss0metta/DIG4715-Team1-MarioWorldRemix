@@ -24,17 +24,14 @@ public class EnemyController : MonoBehaviour
         Player player = collision.gameObject.GetComponent<Player>();
         direction = direction * -1;
 
-        if (collision.gameObject.tag == "Player")
-        {
-            player.Death();
-        }
+        // if (collision.gameObject.tag == "Player")
+        // {
+        //     player.Death();
+        // }
 
         if (direction == 1)
             enemy.flipX = false;
         else
             enemy.flipX = true;
-
-
-
     }
 }

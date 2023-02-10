@@ -36,12 +36,12 @@ public class Player : MonoBehaviour
     AudioSource audioSource;
     public AudioSource BackgroundMusic;
     public AudioSource BackgroundMusic2;
+    public AudioSource LoseAudio;
     public TextMeshProUGUI CoinText;
     public TextMeshProUGUI CoinTextFront;
     int coinCount = 0;
     public AudioClip jumpClip;
     public AudioClip HurtClip;
-    public AudioClip loseAudio;
     public ParticleSystem dust;
     public AudioClip powerUpClip;
     public bool MoshiMode = false;
@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
         }
         animator.SetFloat("horizontal", Mathf.Abs(rb.velocity.x));
-        animator.SetFloat("vertical", rb.velocity.y);
+        //        animator.SetFloat("vertical", rb.velocity.y);
     }
 
     void Jump()
@@ -167,9 +167,11 @@ public class Player : MonoBehaviour
     {
         BackgroundMusic.Stop();
         BackgroundMusic2.Stop();
-        audioSource.PlayOneShot(loseAudio);
+        LoseAudio.Play();
+        CoinText.gameObject.SetActive(false);
+        CoinTextFront.gameObject.SetActive(false);
         loseScreen.gameObject.SetActive(true);
-        loseScreen.gameObject.SetActive(true);
+        audioSource.Stop();
     }
 
     void SetCoinText()
