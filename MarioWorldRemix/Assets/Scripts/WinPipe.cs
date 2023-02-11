@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class WinPipe : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Player controller = other.GetComponent<Player>();
+        if (controller != null)
+        {
+            controller.Win();
+        }
     }
 }

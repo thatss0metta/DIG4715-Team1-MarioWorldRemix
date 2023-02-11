@@ -187,7 +187,7 @@ public class Player : MonoBehaviour
         CoinTextFront.gameObject.SetActive(false);
         WinScreen.gameObject.SetActive(true);
         Destroy(gameObject);
-        score.text = "score" + coinCount.ToString() + " x 1000" + (coinCount * 1000).ToString();
+        score.text = "score\n" + coinCount.ToString() + " x 1000\n" + (coinCount * 1000).ToString();
     }
 
     void SetCoinText()
