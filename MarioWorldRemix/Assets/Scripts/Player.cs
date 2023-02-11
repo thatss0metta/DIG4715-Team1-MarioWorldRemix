@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     public AudioSource BackgroundMusic;
     public AudioSource BackgroundMusic2;
     public AudioSource LoseAudio;
+    public AudioSource WinAudio;
     public TextMeshProUGUI CoinText;
     public TextMeshProUGUI CoinTextFront;
     public TextMeshProUGUI score;
@@ -181,6 +182,7 @@ public class Player : MonoBehaviour
     {
         BackgroundMusic.Stop();
         BackgroundMusic2.Stop();
+        WinAudio.Play();
         CoinText.gameObject.SetActive(false);
         CoinTextFront.gameObject.SetActive(false);
         WinScreen.gameObject.SetActive(true);
