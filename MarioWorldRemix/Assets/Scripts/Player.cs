@@ -34,12 +34,14 @@ public class Player : MonoBehaviour
 
     [Header("Canvas")]
     public GameObject loseScreen;
+    public GameObject WinScreen;
     AudioSource audioSource;
     public AudioSource BackgroundMusic;
     public AudioSource BackgroundMusic2;
     public AudioSource LoseAudio;
     public TextMeshProUGUI CoinText;
     public TextMeshProUGUI CoinTextFront;
+    public TextMeshProUGUI score;
     int coinCount = 0;
     public AudioClip jumpClip;
     public AudioClip HurtClip;
@@ -173,6 +175,17 @@ public class Player : MonoBehaviour
         CoinTextFront.gameObject.SetActive(false);
         loseScreen.gameObject.SetActive(true);
         Destroy(gameObject);
+    }
+
+    public void Win()
+    {
+        BackgroundMusic.Stop();
+        BackgroundMusic2.Stop();
+        CoinText.gameObject.SetActive(false);
+        CoinTextFront.gameObject.SetActive(false);
+        WinScreen.gameObject.SetActive(true);
+        Destroy(gameObject);
+        score.text = "score" + coinCount.ToString() + " x 1000" + (coinCount * 1000).ToString();
     }
 
     void SetCoinText()
